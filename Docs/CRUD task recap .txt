@@ -1,0 +1,11 @@
+I completed the full CRUD logic for the UserService class:
+
+Create (POST): Takes a CreateUserRequest, builds a User, and adds it using UserRepository.Add.
+
+Update (PUT): Uses UpdateUserRequest to modify only non-null fields, then saves with UserRepository.Update.
+
+Delete: Removes a user by ID using UserRepository.Delete.
+
+GetAll & GetById: Returns user data using response DTOs.
+
+I also created all required DTOs (CreateUserRequest, UpdateUserRequest, GetUserByIdResponse, GetAllUserResponse) and implemented the missing repository methods to support these operations.
