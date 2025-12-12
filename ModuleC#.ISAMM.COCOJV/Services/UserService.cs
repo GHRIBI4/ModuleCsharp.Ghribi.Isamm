@@ -30,46 +30,35 @@ namespace ModuleC_.ISAMM.COCOJV.Services
             }
             return new GetUserByIdResponse(user);
         }
-        public void Create(CreateUserRequest request)
+        public GetUserByIdResponse Post(PostUserRequest dto)
         {
-            var user = new User(
-            request.UserName,
-            request.Password,
-            request.Age,
-            request.Email,
-            request.Region
-            );
-
-            _userRepository.Add(user);
+            Guid userId = _userRepository.Post(entity: new User(
+                dto.UserName,
+                dto.Password,
+                dto.Age,
+                dto.Email,
+                dto.Region
+            ));
+            return GetById(userId);
         }
-        public bool Update(UpdateUserRequest request)
+        public GetUserByIdResponse Put (PutUserRequest dto)
         {
-            var user = _userRepository.GetById(request.Id);
+            User user = _userRepository.GetById(dto.Id);
             if (user == null)
             {
-                return false;
+                return null;
             }
+            user.Age = dto.Age;
+            user.Email = dto.Email;
+            user.Region = dto.Region;
 
-            if (!string.IsNullOrEmpty(request.UserName)) user.UserName = request.UserName;
-            if (!string.IsNullOrEmpty(request.Password)) user.Password = request.Password;
-            if (request.Age.HasValue) user.Age = request.Age.Value;
-            if (!string.IsNullOrEmpty(request.Email)) user.Email = request.Email;
-            if (!string.IsNullOrEmpty(request.Region)) user.Region = request.Region;
+            _userRepository.Put(user);
 
-            user.UpdatedDate = DateTime.UtcNow;
-            _userRepository.Update(user);
-            return true;
+            return GetById(user.Id);
         }
-        public bool Delete(Guid id)
+        public void Delete (Guid id)
         {
-            var user = _userRepository.GetById(id);
-            if (user == null)
-            {
-                return false;
-            }
-
             _userRepository.Delete(id);
-            return true;
         }
 
     }

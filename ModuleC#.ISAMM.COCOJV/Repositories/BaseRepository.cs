@@ -20,31 +20,32 @@ namespace ModuleC_.ISAMM.COCOJV.Repositories
         {
             return _entityList.FirstOrDefault(u => u.Id == id);
         }
-
-        public void Post(TEntity entity)
+        public Guid Post (TEntity entity)
         {
+            entity.Id = Guid.NewGuid();
             entity.CreatedDate = DateTime.UtcNow;
             _entityList.Add(entity);
+            return entity.Id;
         }
-
-        public void Put(TEntity entity)
+        public void Put (TEntity entity)
         {
             var existingEntity = GetById(entity.Id);
             if (existingEntity != null)
             {
                 existingEntity = entity;
-                existingEntity.UpdatedDate = DateTime.UtcNow;
+                existingEntity.UpdatedDate = DateTime.UtcNow; 
+
+
             }
         }
-
-        public void Delete(Guid id)
+        public void Delete (Guid id)
         {
             var entity = GetById(id);
-            if (entity != null)
+            if ( entity !=null)
             {
                 _entityList.Remove(entity);
+
             }
         }
-
     }
 }

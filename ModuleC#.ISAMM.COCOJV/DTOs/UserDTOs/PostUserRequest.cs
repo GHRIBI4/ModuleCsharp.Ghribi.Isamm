@@ -1,6 +1,6 @@
 ﻿namespace ModuleC_.ISAMM.COCOJV.DTOs.UserDTOs
 {
-    public class CreateUserRequest
+    public class PostUserRequest
     {
         public required string UserName { get; set; }
         public required string Password { get; set; }
